@@ -1,0 +1,10 @@
+data <- read.table(pipe('grep \'^[12]/2/2007\' ./household_power_consumption.txt'), sep=";", header=F)
+get_names <- read.table(pipe('head -1 ./household_power_consumption.txt'), sep=";", header=T)
+names(data) <- names(get_names)
+
+png(file = "plot3.png", width = 480, height = 480)
+with(data, plot(x = time, Sub_metering_1, col = "black", type = "l", ylab="Energy sub metering"))
+with(data, lines(time, Sub_metering_2, col = "red", type="l"))
+with(data, lines(time, Sub_metering_3, col = "blue", type="l"))
+legend("topright", legend=paste("Sub_metering",1:3,sep="_"),lty=1,col=c("black","red","blue"))
+dev.off()
